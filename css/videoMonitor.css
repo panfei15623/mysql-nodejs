@@ -1,0 +1,163 @@
+#contain{
+    width: 1180px;
+    margin: 0 auto;
+    padding: 0px 10px;
+}
+#header{
+    margin-top: 30px;
+    height: 80px;
+}
+.div-input{
+    width: 100%;
+    padding-right: 5px;
+    display: inline-block;
+}
+#total{
+    display: inline-block;
+    font-size: 18px;
+    float: right;
+    line-height: 32px;
+    padding-right: 10px;
+}
+.input{
+    width: 150px;
+    display: inline;
+    margin-bottom: 5px;
+}
+.btnN{
+    font-size: 16px;
+    border-radius: 4px;
+    background-color: rgb(79,129,189);
+}
+.btn-alert{
+    background: url("../image/submit.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 30px;
+    margin:10px 0 ;
+    width: 70px;
+    border: none;
+}
+#content{
+    margin-top:10px;
+    border-top: 2px solid;
+    text-align: center;
+}
+.form{
+    width: 250px;
+    height: 340px;
+    margin: 0px auto;
+    background-color:#CFE8F8;
+    border: 1px solid #74ABC6;
+    position: relative;
+    top:80px;
+    display: none;
+    z-index: 1000;
+}
+#title{
+    display: inline-block;
+    font-size: 16px;
+    padding-left: 10px;
+    color:#345E7D;
+}
+.close-form{
+    background: url("../image/close.png") rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    position: absolute;
+    top:20px;
+    right:10px
+}
+#form-content{
+    width: 240px;
+    height: 220px;
+    margin: 5px auto;
+    padding: 45px 0px;
+    background-color: #ffffff;
+    border: 1px solid #74ABC6;
+}
+label{
+    font-size: 16px;
+    width: 70px;
+    text-align: right;
+    font-weight: normal;
+}
+#ulList{
+    margin-top: 10px;
+    overflow: hidden;
+    padding-left: 0px;
+}
+#ulList li{
+    float: left;
+    width: 285px;
+    height: 110px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    padding: 10px 10px 0px 10px;
+    border: 2px solid;
+    list-style-type: none;
+}
+.video-left{
+    float: left;
+    width: 56px;
+    height: 80px;
+}
+.video-right{
+    float:left;
+    padding-left: 8px;
+}
+.div-address{
+    padding-left: 8px;
+}
+.div-clock{
+    padding-top: 10px;
+}
+.div-status{
+    padding-top: 8px;
+}
+.time{
+    padding-right: 5px;
+    padding-left: 8px
+}
+@media(max-width:960px){
+    #contain{
+        width: 890px;
+    }
+}
+#dialog-left{
+    float:left;
+}
+#dialog-right{
+    width: 350px;
+    float: left;
+    font-size: 28px;
+    padding-top: 20px;
+    padding-left: 45px;
+}
+.dialog-btn{
+    width: 245px;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(146,208,80);
+}
+#footer{
+    margin: 0px auto;
+    margin-top: 160px;
+}
+.green{
+    background-color: rgb(195,214,155);
+}
+a{
+    color: #000000;
+    text-decoration: underline;
+}
+table{
+    font-size: 16px;
+}
+.tr-new{
+    border-bottom: 3px solid #eeeeee;
+}
+.td-new{
+   padding: 100px;
+}

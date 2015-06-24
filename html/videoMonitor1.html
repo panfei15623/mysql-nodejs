@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>班长席视频质检</title>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/videoMonitor.css"/>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/knockout-3.2.0.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/respond.min.js"></script>
+</head>
+<body>
+<div id="contain">
+    <div id="header">
+        <h2 style="margin: 10px 0px">班长席视频质检：</h2>
+        <form>
+            <div class="div-input">
+                <label for="loginStatus">登录状态</label>
+                <input type="text" id="loginStatus" class=" ks-input input">
+            </div>
+            <div class="div-input">
+                <label for="jobNumber">工号</label>
+                <input type="text" id="jobNumber" class=" ks-input  input">
+            </div>
+            <div class="div-input">
+                <label for="name">姓名</label>
+                <input type="text" id="name" class=" ks-input input">
+            </div>
+            <div class="div-input">
+                <button class="ks-button btnN">搜索</button>
+            </div>
+        </form>
+    </div>
+    <div id="content">
+        <ul id="ulList" data-bind="foreach: monitor">
+            <li data-bind="style:{ backgroundColor: status == '登录' ? 'rgb(195,214,155)' : ''  }">
+                <div class="video-left">
+                    <img src="../image/video.png"/>
+                </div>
+                <div class="video-right text-left">
+                    <div class="div-address">
+                        <span data-bind="text:address"></span><span>:</span><span data-bind="text:name"></span><span data-bind="text:jobNumber"></span>
+                    </div>
+                    <div class="div-clock">
+                        <img src="../image/clock.png" style="vertical-align: middle"/>
+                        <span class="time"data-bind="text:time"></span>
+                        <button class="ks-button btnN" data-bind="style:{ display: status == '登录' ? 'inline-block' : 'none'}">监看</button>
+                    </div>
+                    <div class="div-status">
+                        <span data-bind="text:status"></span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    function monitorInformation(address, name, jobNumber, time, status){
+        this.address = address;
+        this.name = name;
+        this.jobNumber = jobNumber;
+        this.time = time;
+        this.status = status;
+    }
+    function myViewModel(){
+        this.monitor = ko.observableArray([
+            new monitorInformation('四川','张宏','(0051)','00:10:09','登录'),
+            new monitorInformation('四川','张欣','(0052)','00:03:10','登录'),
+            new monitorInformation('四川','吴文','(0058)','00:20:15','登录'),
+            new monitorInformation('四川','成文','(0060)','00:02:12','登录'),
+            new monitorInformation('四川','王平','(0061)','00:00:00','登录'),
+            new monitorInformation('四川','谷清','(0021)','00:00:00','登录'),
+            new monitorInformation('四川','岩峰','(0031)','00:00:00','登录'),
+            new monitorInformation('四川','陈宁','(0087)','00:00:00','登录'),
+            new monitorInformation('四川','张云','(0041)','00:00:00','登录'),
+            new monitorInformation('四川','张梁宁','(0042)','00:00:00','登录'),
+            new monitorInformation('四川','彭宏','(0088)','00:00:00','登录'),
+            new monitorInformation('四川','张静','(0011)','00:00:00','离线'),
+            new monitorInformation('四川','张一','(0022)','00:00:00','离线'),
+            new monitorInformation('四川','张一静','(0023)','00:00:00','离线'),
+            new monitorInformation('四川','曾经','(00111)','00:00:00','离线'),
+            new monitorInformation('四川','完美','(0121)','00:00:00','离线')
+
+        ]);
+    }
+    ko.applyBindings(new myViewModel());
+
+</script>
+</body>
+</html>

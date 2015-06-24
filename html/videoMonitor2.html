@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>班长席视频质检</title>
+    <link rel="stylesheet" href="../css/bootstrap.css"/>
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/videoMonitor.css"/>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <script src="../js/knockout-3.2.0.js"></script>
+</head>
+<body>
+    <div id="contain">
+        <div id="header">
+            <h2 style="margin: 10px 0px">班长席视频质检：</h2>
+                <div class="div-input">
+                    <button class="ks-button btnN" onclick="display()">全部</button>
+                    <button class="ks-button btnN" style="margin-left: 15px" data-bind="click:insert">添加</button>
+                    <input  id="query-jobnumber" type="text" placeholder="输入工号查询" style="height: 30px;margin-left: 15px"/>
+                    <button class="ks-button btnN" data-bind="click:query">查询</button>
+                    <div id="total">总数：<span data-bind="text:videoInfor().length"></span></div>
+                </div>
+            <form  class="form">
+                <div>
+                    <h1 id="title">添加</h1>
+                    <a href="#" class="close-form" data-bind="click:close"></a>
+                </div>
+                <div id="form-content">
+                    <div>
+                        <label for="jobNumber">工号</label>
+                        <input type="text" id="jobNumber" class="input">
+                    </div>
+                    <div>
+                        <label for="address">区域</label>
+                        <input type="text" id="address" class="input">
+                    </div>
+                    <div>
+                        <label for="date">日期</label>
+                        <input type="text" id="date" class="input">
+                    </div>
+                    <div>
+                        <label for="videoFile">录像文件</label>
+                        <input type="text" id="videoFile" class="input">
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn-alert" data-bind="click:btnSubmit"></button>
+                </div>
+            </form>
+        </div>
+        <div id="content">
+            <table class="table" style="margin-top: 8px">
+                <thead>
+                    <tr class="green tr-new">
+                        <td style="padding: 15px 8px;">工号</td>
+                        <td style="padding: 15px 8px;">区域</td>
+                        <td style="padding: 15px 8px;">日期</td>
+                        <td style="padding: 15px 8px">录像文件</td>
+                        <td style="padding: 15px 8px;"></td>
+                        <td style="padding: 15px 8px;"></td>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach:videoInfor">
+                   <tr class="tr-new" data-bind="style:{ backgroundColor: $index() % 2 == 1 ? 'rgb(195,214,155)' : 'white'}">
+                       <td style="padding: 15px 8px" data-bind="text:jobNumber"></td>
+                       <td style="padding: 15px 8px" data-bind="text:address"></td>
+                       <td style="padding: 15px 8px" data-bind="text:date"></td>
+                       <td style="padding: 15px 8px" data-bind="text:videoFile"></td>
+                       <!--<td style="padding: 15px 8px"><a href="#" data-bind="event:{ click: $parent.edit.bind($data,$data['jobNumber']) }">修改</a></td>-->
+                       <td style="padding: 15px 8px"><a href="#" data-bind="click: $parent.edit">修改</a></td>
+                       <td style="padding: 15px 8px"><a href="#" data-bind="click: $parent.dele">删除</a></td>
+                   </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function viewModel(){
+            var self = this;
+            this.videoInfor = ko.observableArray();
+
+            //添加
+            this.insert = function(){
+                $("#title").text("添加");
+                $(".form").show();
+            }
+
+            //提交
+            this.btnSubmit = function(){
+                var title = $("#title").text();
+                if(title == "添加"){
+                    var url = "http://localhost:8001/insert";
+                }
+                if(title == "修改"){
+                    var url = "http://localhost:8001/edit";
+                }
+                $.ajax({
+                    url          : url,
+                    dataType     : "jsonp",
+                    data         : {
+                        jobNumber: $("#jobNumber").val(),
+                        address  : $("#address").val(),
+                        date     : $("#date").val(),
+                        videoFile: $("#videoFile").val()
+                    },
+                    success      : function () {
+                        $(".form").hide();
+                        display();
+                        alert(title+ "成功");
+                    }
+                });
+            }
+            //查询
+            this.query = function(){
+                $.ajax({
+                    url          : "http://localhost:8001/query",
+                    dataType     : "jsonp",
+                    data         : {
+                        jobNumber: $("#query-jobnumber").val()
+                    },
+                    success      : function (data) {
+                        self.videoInfor(data);
+                    }
+                });
+            }
+
+            //修改
+            this.edit = function(param){
+                $("#title").text("修改");
+                $(".form").show();
+                $.ajax({
+                    url          : "http://localhost:8001/query",
+                    dataType     : "jsonp",
+                    data         : {
+                        jobNumber: param.jobNumber
+                    },
+                    success      : function (data) {
+                        $("#jobNumber").val(data[0].jobNumber);
+                        $("#address").val(data[0].address);
+                        $("#date").val(data[0].date);
+                        $("#videoFile").val(data[0].videoFile);
+                    }
+                });
+            };
+            //删除
+            this.dele = function(param){
+                $.ajax({
+                    url          : "http://localhost:8001/delete",
+                    dataType     : "jsonp",
+                    data         : {
+                        jobNumber: param.jobNumber
+                    },
+                    success      : function () {
+                        display();
+                        alert("删除的jobNumber为" + param.jobNumber);
+                    }
+                });
+            };
+            this.close = function(){
+                $(".form").hide();
+            }
+        }
+        var video = new viewModel();
+        ko.applyBindings(video);
+
+        //显示
+        function display(){
+            $.ajax({
+                url:"http://localhost:8001/display" ,
+                dataType:"jsonp",
+                success:function(data){
+                    video.videoInfor(data);
+                }
+            });
+        }
+        display();
+    </script>
+</body>
+</html>
